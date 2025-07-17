@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 @MainActor
-protocol TrendingListViewModelProtocol: ViewModel {
+protocol TrendingListViewModelType: ViewModel {
     var state: ViewState<[Repository]> { get }
     var trendingList: [Repository] { get }
     var showOnlyFavorites: Bool { get set }
@@ -23,7 +23,7 @@ protocol TrendingListViewModelProtocol: ViewModel {
 
 @MainActor
 @Observable
-final class TrendingListViewModel: TrendingListViewModelProtocol {
+final class TrendingListViewModel: TrendingListViewModelType {
     private let apiService: GithubSearchApi
     private let favoriteStore: FavoriteStoreType
     
@@ -36,7 +36,7 @@ final class TrendingListViewModel: TrendingListViewModelProtocol {
         }
     }
     
-    //MARK: - View State
+    //MARK: - View State.
     var state: ViewState<[Repository]> = .idle
     
     var showOnlyFavorites: Bool = false
@@ -83,7 +83,11 @@ final class TrendingListViewModel: TrendingListViewModelProtocol {
             let list = try await apiService.fetchTrending(for: dateString)
             fetchedTrendingList = list
             
-            state = .sucsess(list)
+            if Bool.random() {
+                state = .sucsess(list)
+            } else {
+                state = .error(ApiError.custom(message: "Testing"))
+            }
         } catch {
             state = .error(error as? ApiError)
         }

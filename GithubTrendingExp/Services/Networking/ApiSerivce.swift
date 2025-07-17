@@ -25,7 +25,11 @@ actor ApiService {
         self.session = session
     }
     
-    func perfomRequest<T: Decodable>(_ request: URLRequest) async throws -> T {
+    func perfomRequest<T: Decodable>(_ endpoint: ApiEndpointType) async throws -> T {
+        guard let request = endpoint.urlRequest else {
+                throw ApiError.custom(message: "Invalid request.")
+        }
+        
         let (data, response) = try await session.data(for: request)
         
         guard let response = response as? HTTPURLResponse, data.count > 0 else {
@@ -41,23 +45,6 @@ actor ApiService {
         } catch {
             throw error
         }
-    }
-    
-    func perfomDataRequest(_ request: URLRequest) async throws -> Data {
-        let (data, response) = try await session.data(for: request)
-        
-        guard let response = response as? HTTPURLResponse, data.count > 0 else {
-            throw ApiError.invalidResponse
-        }
-        
-        guard (200...299).contains(response.statusCode) else {
-            throw ApiError.invalidStatusCode(code: response.statusCode)
-        }
-        
-        guard data.count >= 0 else {
-            throw ApiError.custom(message: "Invalid data response.")
-        }
-        return data
     }
 }
 

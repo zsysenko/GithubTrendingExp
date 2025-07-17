@@ -14,12 +14,8 @@ protocol GithubSearchApi: Actor {
 extension ApiService: GithubSearchApi {
     
     func fetchTrending(for period: String) async throws -> [Repository] {
-        guard let reqest = ApiRequest
-            .featured(period: period)
-            .urlRequest else {
-                throw ApiError.invalidUrl
-        }
-        let searchResponse: SearchResponse = try await perfomRequest(reqest)
+        let apiReqeust = ApiRequest.featured(period: period)
+        let searchResponse: SearchResponse = try await perfomRequest(apiReqeust)
         return searchResponse.items
     }
 }

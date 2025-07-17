@@ -10,7 +10,7 @@ import XCTest
 
 final class TrendingListViewModelTests: XCTestCase {
 
-    var viewModel: TrendingListViewModelProtocol!
+    var viewModel: TrendingListViewModelType!
     var mockApi: MockGithubSearchApi!
     var mockFavoriteStore: MockFavoriteStore!
 

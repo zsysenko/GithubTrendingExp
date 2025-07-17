@@ -43,7 +43,6 @@ final class AppCoordinator: NavigationCoordinatorProtocol {
     }
 }
 
-
 // MARK: - Coordinator Root View
 struct CoordinatorView<Content: View>: View {
     

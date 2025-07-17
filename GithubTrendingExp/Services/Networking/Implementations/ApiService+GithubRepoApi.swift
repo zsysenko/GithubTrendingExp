@@ -14,12 +14,9 @@ protocol GithubRepoApi: Actor {
 extension ApiService: GithubRepoApi {
     
     func fetchLanguages(owner: String, repo: String) async throws -> [Language] {
-        guard let request = ApiRequest
-            .languages(owner: owner, repo: repo)
-            .urlRequest else {
-                throw ApiError.custom(message: "Invalid request.")
-        }
-        let jsonLanguages: JsonLanguage = try await perfomRequest(request)
+        let apiReqeust = ApiRequest.languages(owner: owner, repo: repo)
+        
+        let jsonLanguages: JsonLanguage = try await perfomRequest(apiReqeust)
         let languages = jsonLanguages.map { Language(name: $0.key, value: $0.value) }
         
         return languages

@@ -44,10 +44,10 @@ struct RepositoryDetailScreen: View {
                     .padding(.horizontal)
                 
             case .idle, .loading:
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(.gray)
-                    .frame(maxHeight: 80)
+                ProgressView()
+                    .progressViewStyle(.circular)
                     .padding()
+                Spacer()
                 
             case .error(_):
                 EmptyView()
@@ -111,7 +111,8 @@ struct RepositoryDetailScreen: View {
 #Preview {
     RepositoryDetailScreen(
         viewModel: RepositoryDetailModel(
-            repository: Repository.mock(id: 1, name: "Test repo", language: "Swift"), apiService: ApiService()
+            repository: Repository.mock(id: 1, name: "Test repo", language: "Swift"),
+            apiService: AppDependencies.preview.apiRepoService
         )
     )
 }

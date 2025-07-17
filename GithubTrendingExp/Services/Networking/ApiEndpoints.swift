@@ -21,9 +21,9 @@ protocol ApiEndpointType {
 }
 
 // MARK: - Defaults.
-
 extension ApiEndpointType {
     var urlRequest: URLRequest? {
+        
         guard var components = URLComponents(string: baseURL + path) else { return nil }
         components.queryItems = queryItems
         
@@ -42,15 +42,21 @@ extension ApiEndpointType {
 
 enum ApiRequest {
     case featured(period: String)
-    case readme(owner: String, repo: String)
     case languages(owner: String, repo: String)
+    
+    case readme(owner: String, repo: String)
 }
 
 extension ApiRequest: ApiEndpointType {
     
     var baseURL: String { "https://api.github.com" }
     
-    var method: String { "GET" }
+    var method: String {
+        switch self {
+            default:
+              return "Get"
+        }
+    }
     
     var path: String {
         switch self {

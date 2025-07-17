@@ -18,10 +18,10 @@ enum ActiveFilter: Identifiable  {
 struct TrendingListScreen: View {
     @Environment(AppCoordinator.self) private var coordinator
     
-    @State private var viewModel: TrendingListViewModelProtocol
+    @State private var viewModel: TrendingListViewModelType
     @State private var selectedFilter: ActiveFilter? = nil
     
-    init(viewModel: TrendingListViewModelProtocol) {
+    init(viewModel: TrendingListViewModelType) {
         self.viewModel = viewModel
     }
     
@@ -29,7 +29,7 @@ struct TrendingListScreen: View {
         VStack {
             headerView
             listView
-         
+            
             Spacer()
         }
         .navigationTitle("Trending")
@@ -60,7 +60,7 @@ struct TrendingListScreen: View {
     }
     
     @ViewBuilder
-    private var listView: some View{
+    private var listView: some View {
         switch viewModel.state {
             case .loading:
                 ProgressView()
@@ -70,6 +70,9 @@ struct TrendingListScreen: View {
                 
             case .sucsess:
                 contentView
+                
+            case .error:
+                GenericErrorView() { Task { await viewModel.load()} }
                 
             default:
                 EmptyView()
@@ -95,6 +98,18 @@ struct TrendingListScreen: View {
                 }
             })
             .frame(maxWidth: 700, alignment: .center)
+            .overlay {
+                if viewModel.trendingList.isEmpty {
+                    VStack {
+                        ContentUnavailableView(
+                            "No Results Found",
+                            systemImage: "magnifyingglass"
+                        )
+                        .frame(maxHeight: 150)
+                        Spacer()
+                    }
+                }
+            }
         }
         .frame(maxWidth: .infinity)
         .background(
@@ -132,57 +147,13 @@ struct TrendingListScreen: View {
     }
 }
 
-struct RepositoryCell: View {
-    let repository: Repository
-    @Binding var isInFavorite: Bool
-    
-    var avatarUrl: URL? {
-        repository.owner.avatarUrl
-    }
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    AvatarView(url: avatarUrl)
-                        .frame(maxWidth: 30)
-                    
-                    RepoTitleView(
-                        repo: repository.name,
-                        owner: repository.owner.login
-                    )
-                }
-                
-                Text(repository.description ?? " - ")
-                    .font(.caption)
-                
-                HStack(spacing: 10) {
-                    Text(repository.language ?? "")
-                        .bold()
-                    
-                    StarsView(starsCount: repository.stargazersCount)
-                    ForksView(forkCount: repository.forksCount)
-                    Spacer()
-                }
-                .font(.caption)
-            }
-            Spacer()
-            
-            VStack {
-                AppToggle(isOn: $isInFavorite)
-            }
-        }
-        .frame(maxHeight: .infinity)
-    }
-}
-
 #Preview {
     TrendingListScreen(
         viewModel: TrendingListViewModel(
             apiService: ApiService(),
             favoriteStore: FavoriteStore()
         )
-            
+        
     )
     .environment(AppCoordinator(dependencies: .preview ))
 }
