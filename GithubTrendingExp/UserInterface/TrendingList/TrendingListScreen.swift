@@ -26,12 +26,14 @@ struct TrendingListScreen: View {
     }
     
     var body: some View {
-        VStack {
+        ScrollView {
             headerView
-            listView
-            
-            Spacer()
+                .padding(.bottom, 20)
+            Divider()
+                
+            contentView
         }
+        .searchable(text: $viewModel.searchText)
         .navigationTitle("Trending")
         .onAppear {
             Task {
@@ -60,7 +62,7 @@ struct TrendingListScreen: View {
     }
     
     @ViewBuilder
-    private var listView: some View {
+    private var contentView: some View {
         switch viewModel.state {
             case .loading:
                 ProgressView()
@@ -69,7 +71,7 @@ struct TrendingListScreen: View {
                 Spacer()
                 
             case .sucsess:
-                contentView
+                listView
                 
             case .error:
                 GenericErrorView() { Task { await viewModel.load()} }
@@ -79,42 +81,38 @@ struct TrendingListScreen: View {
         }
     }
     
-    private var contentView:  some View {
-        VStack(spacing: 10) {
-            List(viewModel.trendingList, rowContent: { repository in
-                RepositoryCell(
-                    repository: repository,
-                    isInFavorite: Binding<Bool>(
-                        get: {
-                            viewModel.isInFavorite(for: repository.id)
-                        },
-                        set: { _ in
-                            Task { await viewModel.toggleFavorite(for: repository.id) }
-                        }
-                    )
-                )
-                .onTapGesture {
-                    coordinator.push(.repositoryDetail(repo: repository))
-                }
-            })
-            .frame(maxWidth: 700, alignment: .center)
-            .overlay {
-                if viewModel.trendingList.isEmpty {
-                    VStack {
-                        ContentUnavailableView(
-                            "No Results Found",
-                            systemImage: "magnifyingglass"
+    private var listView:  some View {
+        ZStack {
+            VStack {
+                ForEach(viewModel.trendingList, id: \.self) { repository in
+                    RepositoryCell(
+                        repository: repository,
+                        isInFavorite: Binding<Bool>(
+                            get: {
+                                viewModel.isInFavorite(for: repository.id)
+                            },
+                            set: { _ in
+                                Task { await viewModel.toggleFavorite(for: repository.id) }
+                            }
                         )
-                        .frame(maxHeight: 150)
-                        Spacer()
+                    )
+                    .onTapGesture {
+                        coordinator.push(.repositoryDetail(repo: repository))
                     }
+                    Divider()
                 }
+                .padding(.horizontal, 20)
+            }
+            
+            if viewModel.trendingList.isEmpty {
+                ContentUnavailableView(
+                    "No Results Found",
+                    systemImage: "magnifyingglass"
+                )
+                .frame(maxHeight: 150)
             }
         }
         .frame(maxWidth: .infinity)
-        .background(
-            Color(uiColor: UIColor.systemGroupedBackground)
-        )
     }
     
     private var filtersControll: some View {
@@ -134,7 +132,7 @@ struct TrendingListScreen: View {
     
     private var dateRangeFiltersScreen: some View {
         let dateFilterViewModel = FiltersViewModel(
-            objects: DateRange.allCases,
+            objects: Period.allCases,
             selectedObject: viewModel.selectedDataRange
         )
         return FilterScreen(

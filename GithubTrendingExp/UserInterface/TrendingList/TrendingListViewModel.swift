@@ -13,7 +13,8 @@ protocol TrendingListViewModelType: ViewModel {
     var state: ViewState<[Repository]> { get }
     var trendingList: [Repository] { get }
     var showOnlyFavorites: Bool { get set }
-    var selectedDataRange: DateRange { get set }
+    var selectedDataRange: Period { get set }
+    var searchText: String { get set }
     
     func isInFavorite(for id: Repository.ID) -> Bool
     func toggleFavorite(for id: Repository.ID) async
@@ -36,11 +37,23 @@ final class TrendingListViewModel: TrendingListViewModelType {
         }
     }
     
+    var searchText: String = ""
+    
     //MARK: - View State.
+    
     var state: ViewState<[Repository]> = .idle
     
     var showOnlyFavorites: Bool = false
     var trendingList: [Repository] {
+        guard !searchText.isEmpty else { return favoriteList }
+        
+        return favoriteList.filter {
+            $0.name.localizedCaseInsensitiveContains(searchText) ||
+            $0.owner.login.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+    
+    private var favoriteList: [Repository] {
         if showOnlyFavorites {
             return fetchedTrendingList.filter { favoriteSet.contains($0.id) }
         } else {
@@ -48,9 +61,14 @@ final class TrendingListViewModel: TrendingListViewModelType {
         }
     }
     
-    var selectedDataRange: DateRange = .thisMonth {
+    var selectedDataRange: Period = .thisMonth {
         didSet {
             if oldValue != selectedDataRange {
+                
+                // Drop filters when uploading new results.
+                showOnlyFavorites = false
+                searchText = ""
+                
                 Task { await self.load() }
             }
         }
@@ -82,12 +100,14 @@ final class TrendingListViewModel: TrendingListViewModelType {
             let dateString = selectedDataRange.calculatedDateRange
             let list = try await apiService.fetchTrending(for: dateString)
             fetchedTrendingList = list
+            state = .sucsess(list)
             
-            if Bool.random() {
-                state = .sucsess(list)
-            } else {
-                state = .error(ApiError.custom(message: "Testing"))
-            }
+// Used to simulate errors response. Add if needed.
+//            if [true, true, true, false].randomElement()! {
+//                state = .sucsess(list)
+//            } else {
+//                state = .error(ApiError.custom(message: "Testing"))
+//            }
         } catch {
             state = .error(error as? ApiError)
         }

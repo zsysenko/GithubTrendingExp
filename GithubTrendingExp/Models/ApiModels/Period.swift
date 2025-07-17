@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DateRange: CaseIterable {
+enum Period: CaseIterable {
     case today
     case thisWeek
     case thisMonth
@@ -28,7 +28,7 @@ enum DateRange: CaseIterable {
     }
 }
 
-extension DateRange: FilterObjectProtocol {
+extension Period: FilterObjectProtocol {
     var title: String {
         switch self {
         case .today: "Today"

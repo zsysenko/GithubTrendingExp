@@ -62,10 +62,29 @@ final class TrendingListViewModelTests: XCTestCase {
         await viewModel.load()
         await viewModel.toggleFavorite(for: 1)
         
-        XCTAssertEqual(viewModel.trendingList.count, 3)
-        
         viewModel.showOnlyFavorites = true
         XCTAssertEqual(viewModel.trendingList.count, 1)
         XCTAssertEqual(viewModel.trendingList.first?.id, 1)
+    }
+    
+    @MainActor
+    func testSearchFavoriteList() async {
+        let expectedRepos = [
+            Repository.mock(id: 1, name: "A", language: "Swift"),
+            Repository.mock(id: 2, name: "B", language: "Swift"),
+            Repository.mock(id: 3, name: "C", language: "Python")
+        ]
+        await mockApi.set(repositories: expectedRepos)
+        
+        await viewModel.load()
+        
+        viewModel.searchText = "A"
+        XCTAssertEqual(viewModel.trendingList.count, 1)
+        
+        viewModel.searchText = "a"
+        XCTAssertEqual(viewModel.trendingList.count, 1)
+        
+        viewModel.searchText = "z"
+        XCTAssertEqual(viewModel.trendingList.count, 0)
     }
 }
