@@ -12,22 +12,23 @@ import SwiftData
 struct GithubTrendingExpApp: App {
     private let coordinator: AppCoordinator
     
-    private let dependencies = AppDependencies(
-        apiSearchService: ApiService(),
-        apiRepoService: ApiService(),
-        favoriteStore: FavoriteStore()
-    )
+    private let dependencies: AppDependencies
 
     init() {
+        
+        self.dependencies = AppDependencies(
+            apiSearchService: ApiService(),
+            apiRepoService: ApiService(),
+            favoriteStore: FavoriteStore()
+        )
+        
         self.coordinator = AppCoordinator(dependencies: dependencies)
     }
 
     var body: some Scene {
         WindowGroup {
-            CoordinatorView(coordinator: coordinator) {
-                EmptyView()
-            }
-            .environment(coordinator)
+            CoordinatorView(coordinator: coordinator)
+                .environment(coordinator)
         }
     }
 }

@@ -151,7 +151,6 @@ struct TrendingListScreen: View {
             apiService: ApiService(),
             favoriteStore: FavoriteStore()
         )
-        
     )
-    .environment(AppCoordinator(dependencies: .preview ))
+    .environment(AppCoordinator(dependencies: .preview))
 }

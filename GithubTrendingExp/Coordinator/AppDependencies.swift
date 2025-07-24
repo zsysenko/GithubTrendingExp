@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias FavoritesStoreClosure = () -> FavoriteStore
+
 struct AppDependencies {
     let apiSearchService: GithubSearchApi
     let apiRepoService: GithubRepoApi

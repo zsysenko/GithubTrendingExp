@@ -14,19 +14,11 @@
 			remoteGlobalIDString = FEE35EA12E26B2810063EAFD;
 			remoteInfo = GithubTrendingExp;
 		};
-		FEE35EBC2E26B2830063EAFD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FEE35E9A2E26B2810063EAFD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FEE35EA12E26B2810063EAFD;
-			remoteInfo = GithubTrendingExp;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		FEE35EA22E26B2810063EAFD /* GithubTrendingExp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubTrendingExp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEE35EB12E26B2830063EAFD /* GithubTrendingExpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GithubTrendingExpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FEE35EBB2E26B2830063EAFD /* GithubTrendingExpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GithubTrendingExpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,13 +49,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FEE35EB82E26B2830063EAFD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,7 +66,6 @@
 			children = (
 				FEE35EA22E26B2810063EAFD /* GithubTrendingExp.app */,
 				FEE35EB12E26B2830063EAFD /* GithubTrendingExpTests.xctest */,
-				FEE35EBB2E26B2830063EAFD /* GithubTrendingExpUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,26 +118,6 @@
 			productReference = FEE35EB12E26B2830063EAFD /* GithubTrendingExpTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		FEE35EBA2E26B2830063EAFD /* GithubTrendingExpUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FEE35ECB2E26B2830063EAFD /* Build configuration list for PBXNativeTarget "GithubTrendingExpUITests" */;
-			buildPhases = (
-				FEE35EB72E26B2830063EAFD /* Sources */,
-				FEE35EB82E26B2830063EAFD /* Frameworks */,
-				FEE35EB92E26B2830063EAFD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FEE35EBD2E26B2830063EAFD /* PBXTargetDependency */,
-			);
-			name = GithubTrendingExpUITests;
-			packageProductDependencies = (
-			);
-			productName = GithubTrendingExpUITests;
-			productReference = FEE35EBB2E26B2830063EAFD /* GithubTrendingExpUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -168,10 +132,6 @@
 						CreatedOnToolsVersion = 16.3;
 					};
 					FEE35EB02E26B2830063EAFD = {
-						CreatedOnToolsVersion = 16.3;
-						TestTargetID = FEE35EA12E26B2810063EAFD;
-					};
-					FEE35EBA2E26B2830063EAFD = {
 						CreatedOnToolsVersion = 16.3;
 						TestTargetID = FEE35EA12E26B2810063EAFD;
 					};
@@ -193,7 +153,6 @@
 			targets = (
 				FEE35EA12E26B2810063EAFD /* GithubTrendingExp */,
 				FEE35EB02E26B2830063EAFD /* GithubTrendingExpTests */,
-				FEE35EBA2E26B2830063EAFD /* GithubTrendingExpUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -207,13 +166,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FEE35EAF2E26B2830063EAFD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FEE35EB92E26B2830063EAFD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -237,13 +189,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FEE35EB72E26B2830063EAFD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -251,11 +196,6 @@
 			isa = PBXTargetDependency;
 			target = FEE35EA12E26B2810063EAFD /* GithubTrendingExp */;
 			targetProxy = FEE35EB22E26B2830063EAFD /* PBXContainerItemProxy */;
-		};
-		FEE35EBD2E26B2830063EAFD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FEE35EA12E26B2810063EAFD /* GithubTrendingExp */;
-			targetProxy = FEE35EBC2E26B2830063EAFD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -477,40 +417,6 @@
 			};
 			name = Release;
 		};
-		FEE35ECC2E26B2830063EAFD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LV2U3FKVCG;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zs.GithubTrendingExpUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GithubTrendingExp;
-			};
-			name = Debug;
-		};
-		FEE35ECD2E26B2830063EAFD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LV2U3FKVCG;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zs.GithubTrendingExpUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GithubTrendingExp;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -537,15 +443,6 @@
 			buildConfigurations = (
 				FEE35EC92E26B2830063EAFD /* Debug */,
 				FEE35ECA2E26B2830063EAFD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FEE35ECB2E26B2830063EAFD /* Build configuration list for PBXNativeTarget "GithubTrendingExpUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FEE35ECC2E26B2830063EAFD /* Debug */,
-				FEE35ECD2E26B2830063EAFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

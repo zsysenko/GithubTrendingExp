@@ -17,15 +17,21 @@ protocol FavoriteStoreType {
 @MainActor
 final class FavoriteStore: FavoriteStoreType {
     
-    lazy private var container: ModelContainer = {
-        do {
-            let configuration = ModelConfiguration(isStoredInMemoryOnly: false)
-            self.container = try ModelContainer(for: FavoriteItem.self, configurations: configuration)
-            return container
-        } catch {
-            fatalError("Failed to initialize ModelContainer: \(error)")
+    private var container: ModelContainer
+    
+    init(container: ModelContainer? = nil) {
+        guard let container else {
+            do {
+                let configuration = ModelConfiguration(isStoredInMemoryOnly: false)
+                let container = try ModelContainer(for: FavoriteItem.self, configurations: configuration)
+                self.container = container
+            } catch {
+                fatalError("Failed to initialize ModelContainer: \(error)")
+            }
+            return
         }
-    }()
+        self.container = container
+    }
     
     func toggleFavorite(id: Int) async {
         let context = container.mainContext
@@ -39,7 +45,6 @@ final class FavoriteStore: FavoriteStoreType {
         try? context.save()
     }
     
-    // MARK: - Private
     func fetchFavorites() async -> Set<Repository.ID> {
         let descriptor = FetchDescriptor<FavoriteItem>()
         guard let items = try? container.mainContext.fetch(descriptor) else {

@@ -20,7 +20,6 @@ protocol ApiEndpointType {
     var urlRequest: URLRequest? { get }
 }
 
-// MARK: - Defaults.
 extension ApiEndpointType {
     var urlRequest: URLRequest? {
         
@@ -62,8 +61,10 @@ extension ApiRequest: ApiEndpointType {
         switch self {
             case .featured:
                 return "/search/repositories"
+                
             case .readme(let owner, let repo):
                 return "/repos/\(owner)/\(repo)/readme"
+                
             case .languages(let owner, let repo):
                 return "/repos/\(owner)/\(repo)/languages"
         }

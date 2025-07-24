@@ -44,10 +44,9 @@ final class AppCoordinator: NavigationCoordinatorProtocol {
 }
 
 // MARK: - Coordinator Root View
-struct CoordinatorView<Content: View>: View {
+struct CoordinatorView: View {
     
     @Bindable var coordinator: AppCoordinator
-    let content: () -> Content
     
     var body: some View {
         NavigationStack(path: $coordinator.path) {

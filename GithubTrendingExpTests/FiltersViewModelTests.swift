@@ -12,7 +12,7 @@ final class FiltersViewModelTests: XCTestCase {
     
     typealias ViewModel = FiltersViewModel<String>
     
-    func testInitWithDefaultValues() {
+    func testInitFiltersWithDefaultValues() {
         let items = ["Swift", "Kotlin", "Dart"]
         let viewModel = ViewModel(objects: items, selectedObject: nil)
         
@@ -21,7 +21,7 @@ final class FiltersViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.isOptionalAvailable)
     }
     
-    func testInitWithSelectedObject() {
+    func testInitFiltersWithSelectedObject() {
         let items = ["Swift", "Kotlin", "Dart"]
         let viewModel = ViewModel(objects: items, selectedObject: "Kotlin")
         
@@ -29,7 +29,7 @@ final class FiltersViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.selectedObject, "Kotlin")
     }
     
-    func testSelectRemoveObject() {
+    func testSelectRemoveFilterObject() {
         let items = ["Swift", "Kotlin", "Dart"]
         let viewModel = ViewModel(objects: items, selectedObject: "Kotlin", isOptionalAvailable: true)
         
